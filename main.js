@@ -2,7 +2,7 @@ var container = d3.selectAll(".container");
 
 function updateCells(cells) {
     return cells.style("background-color", function(d) {
-        return (d.style ? "rgba(255,0,0," : "rgba(0,0,255,") +
+        return "hsla(" + 50 * d.style + ",100%,50%," +
             (d.hipster ? "0.5)" : "0.25)");
     })
 }
@@ -23,10 +23,12 @@ function updateData(data) {
     return cells;
 }
 
+var NUM_CELLS = 50;
+
 var data = [];
-for (var i = 0; i < 100; i++) {
+for (var i = 0; i < NUM_CELLS; i++) {
     data.push([]);
-    for (var j = 0; j < 100; j++) {
+    for (var j = 0; j < NUM_CELLS; j++) {
         data[i].push({
             //hipster: (i+j) % 2,
             hipster: Math.random() > 0.2,
@@ -77,6 +79,10 @@ function step() {
     updateData(data);
 }
 
-//step();
+function stepAnimate() {
+    step();
+    //setTimeout(stepAnimate, 300);
+    //requestAnimationFrame(stepAnimate);
+}
 
-setInterval(step, 200);
+stepAnimate();
