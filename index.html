@@ -20,23 +20,29 @@
         height: 7px;
         padding: 0;
     }
-    #calorieCalculator {
+    .content {
         text-align: center;
+    }
+    a {
+        color: #46f;
     }
 </style>
 
-<p id="calorieCalculator">
-    Assume there are
-    <span class="TKAdjustableNumber" data-var="hipsterPercent"
-        data-min="0" data-max="100" data-step="5">% hipsters</span>,
-    which have
-    <span class="TKAdjustableNumber" data-var="influenceRadius"
-        data-min="1" data-max="40" data-step="1"> squares</span>
-    influence radius and
-    <span class="TKAdjustableNumber" data-var="changeProbability"
-        data-min="0" data-max="1" data-step="0.05" data-format="%.2f"></span>
-    probability of changing style.
-</p>
+<div class="content">
+    <p id="calorieCalculator">
+        Assume there are
+        <span class="TKAdjustableNumber" data-var="hipsterPercent"
+            data-min="0" data-max="100" data-step="5">% hipsters</span>,
+        which have
+        <span class="TKAdjustableNumber" data-var="influenceRadius"
+            data-min="1" data-max="40" data-step="1"> squares</span>
+        influence radius and
+        <span class="TKAdjustableNumber" data-var="changeProbability"
+            data-min="0" data-max="1" data-step="0.05" data-format="%.2f"></span>
+        probability of changing style.
+    </p>
+    <p><a href="https://github.com/vgrichina/hispter-effect">Fork this on GitHub</a></p>
+</div>
 
 
 <script src="Tangle.js"></script>
