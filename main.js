@@ -1,8 +1,23 @@
+var tangle = new Tangle (document.getElementById("calorieCalculator"), {
+    initialize: function () {
+        this.changeProbability = 0.3;
+        this.influenceRadius = 15;
+        this.lastHipsterPercent = this.hipsterPercent = 60;
+    },
+    update: function () {
+        // TODO
+        if (this.lastHipsterPercent != this.hipsterPercent) {
+            data = generateData();
+        }
+    }
+});
+
+
 var container = d3.selectAll(".container");
 
 function updateCells(cells) {
     return cells.style("background-color", function(d) {
-        return "hsla(" + 50 * d.style + ",100%,50%," +
+        return "hsla(" + 100 * d.style + ",100%,50%," +
             (d.hipster ? "0.5)" : "0.25)");
     })
 }
@@ -23,20 +38,25 @@ function updateData(data) {
     return cells;
 }
 
-var NUM_CELLS = 50;
 
-var data = [];
-for (var i = 0; i < NUM_CELLS; i++) {
-    data.push([]);
-    for (var j = 0; j < NUM_CELLS; j++) {
-        data[i].push({
-            //hipster: (i+j) % 2,
-            hipster: Math.random() > 0.2,
-            style: 0
-        });
+function generateData() {
+    var NUM_CELLS = 70;
+
+    var data = [];
+    for (var i = 0; i < NUM_CELLS; i++) {
+        data.push([]);
+        for (var j = 0; j < NUM_CELLS; j++) {
+            data[i].push({
+                //hipster: (i+j) % 2,
+                hipster: Math.random() < tangle.getValue("hipsterPercent") / 100.,
+                style: 0
+            });
+        }
     }
+    return data;
 }
 
+var data = generateData();
 updateData(data);
 
 function map2d(data, fn) {
@@ -48,7 +68,7 @@ function map2d(data, fn) {
 }
 
 function percentOfSameStyleNeighbors(data, si, sj) {
-    var RADIUS = 10;
+    var RADIUS = tangle.getValue("influenceRadius");
     var total = 0;
     var matching = 0;
     for (var i = Math.max(si - RADIUS, 0); i < Math.min(si + RADIUS, data.length - 1); i++) {
@@ -69,7 +89,7 @@ function step() {
             sameStylePercent = 1.0 - sameStylePercent;
         }
 
-        var shouldChange = sameStylePercent < 0.5 && Math.random() > 0.75;
+        var shouldChange = sameStylePercent < 0.5 && Math.random() < tangle.getValue("changeProbability");
 
         return {
             hipster: d.hipster,
@@ -81,7 +101,7 @@ function step() {
 
 function stepAnimate() {
     step();
-    //setTimeout(stepAnimate, 300);
+    setTimeout(stepAnimate, 100);
     //requestAnimationFrame(stepAnimate);
 }
 
